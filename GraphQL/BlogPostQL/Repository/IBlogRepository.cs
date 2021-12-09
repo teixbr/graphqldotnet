@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using BlogPostsManagementSystem.DataAccess.Models;
+using BlogPostsManagementSystem.GraphQL.BlogPostQL.Model;
 
-namespace BlogPostsManagementSystem.DataAccess
+namespace BlogPostsManagementSystem.GraphQL.BlogPostQL.Repository
 {
     public interface IBlogPostRepository
     {

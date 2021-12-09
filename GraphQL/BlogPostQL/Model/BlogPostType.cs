@@ -1,6 +1,7 @@
-using BlogPostsManagementSystem.DataAccess.Models;
+using BlogPostsManagementSystem.GraphQL.AuthorQL.Repository;
 using HotChocolate.Types;
-namespace BlogPostsManagementSystem.GraphQL
+
+namespace BlogPostsManagementSystem.GraphQL.BlogPostQL.Model
 {
     public class BlogPostType : ObjectType<BlogPost>
     {

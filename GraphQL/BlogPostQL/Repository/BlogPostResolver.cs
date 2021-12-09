@@ -1,10 +1,11 @@
-using BlogPostsManagementSystem.DataAccess;
-using BlogPostsManagementSystem.DataAccess.Models;
-using HotChocolate;
-using HotChocolate.Resolvers;
 using System.Collections.Generic;
 using System.Linq;
-namespace BlogPostsManagementSystem.GraphQL
+using BlogPostsManagementSystem.GraphQL.AuthorQL.Model;
+using BlogPostsManagementSystem.GraphQL.BlogPostQL.Model;
+using HotChocolate;
+using HotChocolate.Resolvers;
+
+namespace BlogPostsManagementSystem.GraphQL.BlogPostQL.Repository
 {
     public class BlogPostResolver
     {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BlogPostsManagementSystem.DataAccess.Models;
+using BlogPostsManagementSystem.GraphQL.AuthorQL.Model;
 
-namespace BlogPostsManagementSystem.DataAccess
+namespace BlogPostsManagementSystem.GraphQL.AuthorQL.Repository
 {
     public interface IAuthorRepository
     {

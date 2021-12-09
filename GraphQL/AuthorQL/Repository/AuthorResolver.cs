@@ -1,9 +1,11 @@
+using System.Linq;
 using BlogPostsManagementSystem.DataAccess;
-using BlogPostsManagementSystem.DataAccess.Models;
+using BlogPostsManagementSystem.GraphQL.AuthorQL.Model;
+using BlogPostsManagementSystem.GraphQL.BlogPostQL.Model;
 using HotChocolate;
 using HotChocolate.Resolvers;
-using System.Linq;
-namespace BlogPostsManagementSystem.GraphQL
+
+namespace BlogPostsManagementSystem.GraphQL.AuthorQL.Repository
 {
     public class AuthorResolver
     {
@@ -15,7 +17,7 @@ namespace BlogPostsManagementSystem.GraphQL
         
         public Author GetAuthor(BlogPost blog, IResolverContext ctx)
         {
-            return _authorRepository.GetAuthors().Where(a => a.Id == blog.AuthorId).FirstOrDefault();
+            return _authorRepository.GetAuthors().FirstOrDefault(a => a.Id == blog.AuthorId);
         }
     }
 }

@@ -14,4 +14,8 @@
     <Compile Remove="DataAccess\Models\LoginInput.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataAccess\Models" />
+  </ItemGroup>
+
 </Project>

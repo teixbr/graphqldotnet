@@ -1,4 +1,3 @@
-using BlogPostsManagementSystem.DataAccess.Models;
 using HotChocolate;
 using HotChocolate.Execution;
 using HotChocolate.Subscriptions;
@@ -6,6 +5,9 @@ using HotChocolate.Types;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using BlogPostsManagementSystem.GraphQL.AuthorQL.Model;
+using BlogPostsManagementSystem.GraphQL.BlogPostQL.Model;
+
 namespace BlogPostsManagementSystem.GraphQL
 {
     public class Subscription

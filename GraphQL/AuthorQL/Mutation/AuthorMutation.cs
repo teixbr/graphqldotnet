@@ -1,12 +1,13 @@
+using System.Threading.Tasks;
 using BlogPostsManagementSystem.DataAccess;
-using BlogPostsManagementSystem.DataAccess.Models;
+using BlogPostsManagementSystem.GraphQL.AuthorQL.Model;
+using BlogPostsManagementSystem.GraphQL.AuthorQL.Repository;
 using HotChocolate;
 using HotChocolate.Subscriptions;
-using System.Threading.Tasks;
 
-namespace BlogPostsManagementSystem.GraphQL
+namespace BlogPostsManagementSystem.GraphQL.AuthorQL.Mutation
 {
-    public class Mutation
+    public class AuthorMutation
     {
         public async Task<Author> CreateAuthor([Service] AuthorRepository authorRepository,
             [Service] ITopicEventSender eventSender, int id,

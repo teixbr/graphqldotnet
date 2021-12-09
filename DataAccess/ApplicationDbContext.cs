@@ -1,4 +1,5 @@
-using BlogPostsManagementSystem.DataAccess.Models;
+using BlogPostsManagementSystem.GraphQL.AuthorQL.Model;
+using BlogPostsManagementSystem.GraphQL.BlogPostQL.Model;
 using Microsoft.EntityFrameworkCore;
 namespace BlogPostsManagementSystem.DataAccess
 {

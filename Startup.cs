@@ -1,14 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BlogPostsManagementSystem.DataAccess;
 using BlogPostsManagementSystem.GraphQL;
+using BlogPostsManagementSystem.GraphQL.AuthorQL.Model;
+using BlogPostsManagementSystem.GraphQL.AuthorQL.Mutation;
+using BlogPostsManagementSystem.GraphQL.AuthorQL.Query;
+using BlogPostsManagementSystem.GraphQL.AuthorQL.Repository;
+using BlogPostsManagementSystem.GraphQL.BlogPostQL.Model;
+using BlogPostsManagementSystem.GraphQL.BlogPostQL.Query;
+using BlogPostsManagementSystem.GraphQL.BlogPostQL.Repository;
 using HotChocolate.AspNetCore;
 using HotChocolate.AspNetCore.Playground;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,32 +31,21 @@ namespace BlogPostsManagementSystem
             services.AddScoped<IBlogPostRepository, 
                 BlogPostRepository>();
             services
-                .AddGraphQLServer()
-                .AddType<AuthorType>()
+                .AddGraphQLServer( "blogPost" )
+                .AddQueryType<BlogPostQuery>()
                 .AddType<BlogPostType>()
-                .AddQueryType<Query>()
-                .AddMutationType<Mutation>()
                 .AddSubscriptionType<Subscription>();
+
+            services
+                .AddGraphQLServer("author")
+                .AddQueryType<AuthorQuery>()
+                .AddType<AuthorType>()
+                .AddMutationType<AuthorMutation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // if (env.IsDevelopment())
-            // {
-            //     app.UseDeveloperExceptionPage();
-            // }
-            //
-            // app.UseRouting();
-            //
-            // app.UseEndpoints(endpoints =>
-            // {
-            //     endpoints.MapGet("/", async context =>
-            //     {
-            //         await context.Response.WriteAsync("Hello World!");
-            //     });
-            // });
-            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -67,7 +58,8 @@ namespace BlogPostsManagementSystem
             app.UseWebSockets();
             app.UseRouting().UseEndpoints(endpoints =>
                 {
-                    endpoints.MapGraphQL();
+                    endpoints.MapGraphQL("/blogPost", "blogPost");
+                    endpoints.MapGraphQL("/author", schemaName: "author");
                 });
         }
     }

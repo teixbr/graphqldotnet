@@ -1,6 +1,7 @@
 using HotChocolate;
 using HotChocolate.Types;
-namespace BlogPostsManagementSystem.DataAccess.Models
+
+namespace BlogPostsManagementSystem.GraphQL.BlogPostQL.Model
 {
     public class BlogPost
     {

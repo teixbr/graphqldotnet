@@ -1,8 +1,10 @@
-using BlogPostsManagementSystem.DataAccess.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-namespace BlogPostsManagementSystem.DataAccess
+using BlogPostsManagementSystem.DataAccess;
+using BlogPostsManagementSystem.GraphQL.BlogPostQL.Model;
+using Microsoft.EntityFrameworkCore;
+
+namespace BlogPostsManagementSystem.GraphQL.BlogPostQL.Repository
 {
     public class BlogPostRepository : IBlogPostRepository
     {

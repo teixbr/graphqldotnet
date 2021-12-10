@@ -13,7 +13,7 @@ namespace BlogPostsManagementSystem.GraphQL
             _authorRepository = authorService;
         }
         
-        public Author GetAuthor(BlogPost blog, IResolverContext ctx)
+        public Author GetAuthor([Parent] BlogPost blog, IResolverContext ctx)
         {
             return _authorRepository.GetAuthors().Where(a => a.Id == blog.AuthorId).FirstOrDefault();
         }

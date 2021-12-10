@@ -26,26 +26,18 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace BlogPostsManagementSystem
 {
-    public class CustomInterceptor : DefaultHttpRequestInterceptor
-    {
-        public override ValueTask OnCreateAsync(
-            HttpContext context,
-            IRequestExecutor requestExecutor,
-            IQueryRequestBuilder requestBuilder,
-            CancellationToken cancellationToken)
-        {
-            foreach (var key in context.Request.Headers)
-            {
-                Console.Write( key.Key, key.Value );
-            }
-            
-            requestBuilder.AddProperty("foo", context.Request.Headers);
-            return base.OnCreateAsync(context, requestExecutor, requestBuilder, cancellationToken);
-        }
-    }
-    
     public class Startup
     {
+        public class CustomInterceptor : DefaultHttpRequestInterceptor
+        {
+            public override ValueTask OnCreateAsync(HttpContext context, IRequestExecutor requestExecutor, 
+                IQueryRequestBuilder requestBuilder, CancellationToken cancellationToken )
+            {
+                requestBuilder.AddProperty("foo", context.Request.Headers["Authorization"]);
+                return base.OnCreateAsync(context, requestExecutor, requestBuilder, cancellationToken);
+            }
+        }
+        
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -61,31 +53,21 @@ namespace BlogPostsManagementSystem
                 AuthorRepository>();
             services.AddScoped<IBlogPostRepository, 
                 BlogPostRepository>();
-            // services
-            //     .AddGraphQLServer("blogPost")
-            //     .AddQueryType<BlogPostQuery>()
-            //     .AddType<BlogPostType>()
-            //     //.AddSubscriptionType<Subscription>()
-            //     .AddHttpRequestInterceptor<CustomInterceptor>()
-            //     .AddAuthorization();
-            //
-            // services
-            //     .AddGraphQLServer("author")
-            //     .AddQueryType<AuthorQuery>()
-            //     .AddType<AuthorType>()
-            //     .AddMutationType<AuthorMutation>()
-            //     .AddType<BlogPostType>()
-            //     .AddHttpRequestInterceptor<CustomInterceptor>()
-            //     .AddAuthorization();
-
-             services
-                 .AddGraphQLServer()
-                 .AddQueryType<Query>()
-                 .AddType<BlogPostType>()
-                 .AddType<AuthorType>()
-                 .AddMutationType<AuthorMutation>()
-                 .AddAuthorization();
+            services
+                .AddGraphQLServer("blogPost")
+                .AddQueryType<BlogPostQuery>()
+                .AddType<BlogPostType>()
+                //.AddSubscriptionType<Subscription>()
+                .AddHttpRequestInterceptor<CustomInterceptor>()
+                .AddAuthorization();
             
+            services
+                .AddGraphQLServer("author")
+                .AddQueryType<AuthorQuery>()
+                .AddType<AuthorType>()
+                .AddMutationType<AuthorMutation>()
+                .AddHttpRequestInterceptor<CustomInterceptor>()
+                .AddAuthorization();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
                 options =>
@@ -114,9 +96,8 @@ namespace BlogPostsManagementSystem
             app.UseWebSockets();
             app.UseRouting().UseEndpoints(endpoints =>
                 {
-                    // endpoints.MapGraphQL("/blogPost", "blogPost");
-                    // endpoints.MapGraphQL("/author", schemaName: "author");
-                    endpoints.MapGraphQL();
+                    endpoints.MapGraphQL("/blogPost", "blogPost");
+                    endpoints.MapGraphQL("/author", schemaName: "author");
                 });
         }
     }

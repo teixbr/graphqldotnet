@@ -17,14 +17,16 @@ namespace BlogPostsManagementSystem.GraphQL.BlogPostQL.Repository
             _blogPostRepository = blogPostRepository;
         }
         
-        public IEnumerable<BlogPost> GetBlogPosts([Parent] Author author, IResolverContext ctx)
+        public IEnumerable<BlogPost> GetBlogPostsByAuthor([Parent] Author author, IResolverContext ctx)
         {
             if (ctx.ContextData.ContainsKey("Authorization"))
             {
                 Console.WriteLine(ctx.ContextData["Authorization"]);
             }
 
-            return _blogPostRepository.GetBlogPosts().Where(b => b.AuthorId == author.Id);
+            //return _blogPostRepository.GetBlogPosts().Where(b => b.AuthorId == author.Id);
+            //return author.BlogPostList;
+            return _blogPostRepository.GetBlogPostsByAuthor(author);
         }
     }
 }

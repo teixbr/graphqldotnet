@@ -9,8 +9,7 @@ namespace BlogPostsManagementSystem.DataAccess.SQLServer.Mapping
         {
             Id(x => x.Id).GeneratedBy.Identity();
             Map(x => x.Title);
-            Map(x => x.AuthorId);
-            //References(x => x.AuthorId).Column("AuthorId");
+            References(x => x.AuthorId).Column("AuthorId");
             Table("BlogPost");
         }
     }

@@ -17,7 +17,13 @@ namespace BlogPostsManagementSystem.GraphQL.AuthorQL.Repository
         
         public Author GetAuthor([Parent] BlogPost blog, IResolverContext ctx)
         {
-            return _authorRepository.GetAuthors().FirstOrDefault(a => a.Id == blog.AuthorId);
+            //return _authorRepository.GetAuthors().FirstOrDefault(a => a.Id == blog.AuthorId);
+            return blog.AuthorId;
+        }
+        
+        public Author GetAuthorByComment([Parent] Comment comment, IResolverContext ctx)
+        {
+            return comment.AuthorId;
         }
     }
 }

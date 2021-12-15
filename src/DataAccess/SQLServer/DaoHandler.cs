@@ -46,14 +46,30 @@ namespace BlogPostsManagementSystem.DataAccess.SQLServer
                 {
                     if (_factory == null)
                     {
-                        var cfg = Fluently.Configure()
-                            .Database(MsSqlConfiguration.MsSql2012.ConnectionString(ReadProperty.DB_CONNECTION))
-                            .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Program>());
+                        if (ReadProperty.DATABASE_ENGINE.Equals("PostgreSQL"))
+                        {
+                            _factory = Fluently.Configure()
+                                .Database( PostgreSQLConfiguration.Standard.ConnectionString( 
+                                    c=> c.Host( ReadProperty.POSTGRESQL_HOST )
+                                        .Port( ReadProperty.POSTGRESQL_PORT )
+                                        .Database( ReadProperty.POSTGRESQL_DATABASE )
+                                        .Username( ReadProperty.POSTGRESQL_USER )
+                                        .Password( ReadProperty.POSTGRESQL_PASSWORD ))
+                                )
+                                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Program>())
+                                .BuildSessionFactory();
+                        }
+                        else
+                        {
+                            _factory = Fluently.Configure()
+                                .Database(MsSqlConfiguration.MsSql2012.ConnectionString( ReadProperty.SQL_SERVER_STRING ))
+                                .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Program>())
+                                .BuildSessionFactory();
+                        }
+                        
                             // .Mappings(m => m.FluentMappings.AddFromAssemblyOf<Program>())
                             // .Cache(x => x.Not.UseSecondLevelCache())
                             // .Cache(x => x.Not.UseQueryCache());
-
-                            _factory = cfg.BuildSessionFactory();
                     }
                 }
 

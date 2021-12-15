@@ -43,11 +43,15 @@ namespace BlogPostsManagementSystem
             services.AddInMemorySubscriptions();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IBlogPostRepository, BlogPostRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IPrizeRepository, PrizeRepository>();
             
             services
                 .AddGraphQLServer("blogPost")
                 .AddQueryType<BlogPostQuery>()
                 .AddType<BlogPostType>()
+                .AddType<CommentType>()
+                .AddType<AuthorType>()
                 .AddSubscriptionType<BlogPostSubscription>()
                 .AddHttpRequestInterceptor<CustomInterceptor>()
                 .AddAuthorization();

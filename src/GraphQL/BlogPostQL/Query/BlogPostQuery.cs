@@ -24,5 +24,13 @@ namespace BlogPostsManagementSystem.GraphQL.BlogPostQL.Query
             await eventSender.SendAsync("ReturnedBlogPost", blogPost);
             return blogPost;
         }
+        
+        public async Task<Comment> GetCommentById([Service] ICommentRepository commentRepository,
+            [Service] ITopicEventSender eventSender, int id)
+        {
+            Comment comment = commentRepository.GetCommentById(id);
+            await eventSender.SendAsync("ReturnedComment", comment);
+            return comment;
+        }
     }
 }
